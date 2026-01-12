@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AWASTHI MART</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="logo">AWASTHI MART</div>
+
+  <nav>
+    <a onclick="loadProducts('Men')">Men</a>
+    <a onclick="loadProducts('Women')">Women</a>
+    <a onclick="loadProducts('Kids')">Kids</a>
+    <a onclick="loadProducts('Beauty')">Beauty</a>
+  </nav>
+
+  <input type="text" placeholder="Search products">
+  <a class="admin-btn" href="login.html">Admin</a>
+</header>
+
+<!-- HERO (ONLY ONCE) -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Elevate Your Style</h1>
+    <p>Premium fashion curated for modern India</p>
+
+    <!-- SHOP NOW -->
+    <a href="#products" class="shop-btn">Shop Now</a>
+  </div>
+</section>
+
+<!-- PRODUCTS (ONLY ONCE) -->
+<section class="products" id="products"></section>
+
+<script>
+const container = document.getElementById("products");
+
+async function loadProducts(category=""){
+  const url = category 
+    ? `http://localhost:5000/api/products?category=${category}` 
+    : `http://localhost:5000/api/products`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  container.innerHTML="";
+
+  data.forEach(p=>{
+    container.innerHTML += `
+      <div class="card">
+        <img src="http://localhost:5000${p.image}">
+        <h4>${p.title}</h4>
+        <span class="price">₹${p.price}</span>
+        <a href="https://wa.me/918840125802" target="_blank">
+          Buy on WhatsApp
+        </a>
+      </div>
+    `;
+  });
+}
+
+// Page load par sab products
+loadProducts();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel | AWASTHI MART</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="admin-container">
+  <h2>Admin Dashboard</h2>
+
+  <div class="form">
+    <input id="title" placeholder="Product Title">
+    <input id="price" placeholder="Price">
+    <input id="desc" placeholder="Description">
+
+    <select id="category">
+      <option>Men</option>
+      <option>Women</option>
+      <option>Kids</option>
+      <option>Beauty</option>
+    </select>
+
+    <input type="file" id="image">
+    <button onclick="addProduct()">Add Product</button>
+  </div>
+
+  <h3>All Products</h3>
+  <div id="list" class="admin-list"></div>
+</div>
+
+<script>
+const list = document.getElementById("list");
+
+async function loadProducts(){
+  const res = await fetch("http://localhost:5000/api/products");
+  const data = await res.json();
+  list.innerHTML = "";
+
+  data.forEach(p=>{
+    list.innerHTML += `
+      <div class="admin-card">
+        <img src="http://localhost:5000${p.image}">
+        <div>
+          <b>${p.title}</b><br>
+          ₹${p.price}<br>
+          <small>${p.category}</small>
+        </div>
+        <button onclick="del('${p._id}')">Delete</button>
+      </div>
+    `;
+  });
+}
+
+async function addProduct(){
+  const fd = new FormData();
+  fd.append("title", title.value);
+  fd.append("price", price.value);
+  fd.append("description", desc.value);
+  fd.append("category", category.value);
+  fd.append("image", image.files[0]);
+
+  await fetch("http://localhost:5000/api/products", {
+    method:"POST",
+    body:fd
+  });
+
+  title.value = price.value = desc.value = image.value = "";
+  loadProducts();
+}
+
+async function del(id){
+  await fetch(`http://localhost:5000/api/products/${id}`, { method:"DELETE" });
+  loadProducts();
+}
+
+loadProducts();
+</script>
+
+</body>
+</html>

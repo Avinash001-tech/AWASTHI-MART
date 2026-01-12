@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Login | AWASTHI MART</title>
+</head>
+<body style="font-family:Arial;background:#f4f4f4">
+
+<div style="max-width:350px;margin:100px auto;background:white;padding:20px">
+  <h3>Admin Login</h3>
+
+  <input id="u" placeholder="Username"><br><br>
+  <input id="p" type="password" placeholder="Password"><br><br>
+
+  <button onclick="login()">Login</button>
+</div>
+
+<script>
+function login(){
+  fetch("http://localhost:5000/api/admin/login",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({
+      username:u.value,
+      password:p.value
+    })
+  })
+  .then(res=>{
+    if(res.ok){
+      location.href="admin.html";
+    }else{
+      alert("Invalid Login");
+    }
+  });
+}
+</script>
+
+</body>
+</html>
