@@ -20,41 +20,32 @@
     <a onclick="loadProducts('Women')">Women</a>
     <a onclick="loadProducts('Kids')">Kids</a>
     <a onclick="loadProducts('Beauty')">Beauty</a>
+    <a onclick="loadProducts('Handloom')">Handloom</a>
   </nav>
 
-  <input type="text" placeholder="Search products">
+  <input type="text" id="searchInput" placeholder="Search products">
   <a class="admin-btn" href="login.html">Admin</a>
 </header>
 
-<!-- HERO (ONLY ONCE) -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-content">
     <h1>Elevate Your Style</h1>
     <p>Premium fashion curated for modern India</p>
-
-    <!-- SHOP NOW -->
     <a href="#products" class="shop-btn">Shop Now</a>
   </div>
 </section>
 
-<!-- PRODUCTS (ONLY ONCE) -->
+<!-- PRODUCTS -->
 <section class="products" id="products"></section>
+
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-container">
 
     <div class="footer-col">
       <h3>AWASTHI MART</h3>
-      <p>Premium fashion & lifestyle store.<br>
-      Trusted by modern India.</p>
-    </div>
-
-    <div class="footer-col">
-      <h4>Quick Links</h4>
-      <a href="#">Home</a>
-      <a href="#products">Shop</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
+      <p>Premium fashion & lifestyle store.<br>Trusted by modern India.</p>
     </div>
 
     <div class="footer-col">
@@ -63,6 +54,7 @@
       <a onclick="loadProducts('Women')">Women</a>
       <a onclick="loadProducts('Kids')">Kids</a>
       <a onclick="loadProducts('Beauty')">Beauty</a>
+      <a onclick="loadProducts('Handloom')">Handloom</a>
     </div>
 
     <div class="footer-col">
@@ -79,37 +71,6 @@
   </div>
 </footer>
 
-<script>
-const container = document.getElementById("products");
-const API_BASE = "https://awasthi-mart-9.onrender.com";
-
-async function loadProducts(category=""){
-  const url = category
-    ? `${API_BASE}/api/products?category=${category}`
-    : `${API_BASE}/api/products`;
-
-  const res = await fetch(url);
-  const data = await res.json();
-
-  container.innerHTML = "";
-
-  data.forEach(p => {
-    container.innerHTML += `
-      <div class="card">
-        <img src="${API_BASE}${p.image}">
-        <h4>${p.title}</h4>
-        <span class="price">₹${p.price}</span>
-        <a href="https://wa.me/918840125802" target="_blank">
-          Buy on WhatsApp
-        </a>
-      </div>
-    `;
-  });
-}
-
-loadProducts();
-</script>
-
-
+<script src="script.js"></script>
 </body>
 </html>
